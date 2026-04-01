@@ -4,6 +4,7 @@ import sys
 import os
 import pathlib
 import matplotlib.pyplot as plt
+import importlib
 
 from libcollision import *
 from libdyn import *
@@ -17,7 +18,10 @@ if __name__ == "__main__":
 
   pdir = pathlib.Path().resolve()
   sys.path.append(pdir)
-  from inputcoll import *
+  module_name = sys.argv[1]
+  module = importlib.import_module(module_name)
+  # Copy all names from the module into the global namespace
+  globals().update(vars(module))
   sgeom = tgeom + pgeom
   sbasis = tbasis | pbasis
   scharge = tcharge + pcharge
@@ -153,7 +157,7 @@ if __name__ == "__main__":
       print("      ",j, eigv[j,i].real, csfs[j])
     print()
 
-  if(sys.argv[1]=='0'):
+  if(len(sys.argv)>2 and sys.argv[2]=='0'):
       sys.exit()
 
   for b in blist:
