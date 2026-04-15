@@ -1,0 +1,17 @@
+<input>
+  
+  <general>
+   <spin> 1 </spin>
+   <electron na='5' nb='5' />
+  </general>
+
+  <block>
+    <space ne='10' imo='0' fmo='4' />
+  </block>
+  <block>
+    <space ne='9' imo='0' fmo='4' />
+    <space ne='1' imo='14' fmo='14' />
+  </block>
+
+</input>
+

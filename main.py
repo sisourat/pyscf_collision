@@ -91,10 +91,11 @@ if __name__ == "__main__":
   mol.build( unit = 'Bohr')
 
   zpcenter = [np.repeat([0,0,zp], len(pcenter))]
-  salp = np.concatenate((talp, palp), axis=0)
-  scoef = np.concatenate((tcoef, pcoef), axis=0)
-  scenter = np.concatenate((tcenter, zpcenter), axis=0)
-  spower = np.concatenate((tpower, ppower), axis=0)
+  if orb == 'modpot':
+   salp = np.concatenate((talp, palp), axis=0)
+   scoef = np.concatenate((tcoef, pcoef), axis=0)
+   scenter = np.concatenate((tcenter, zpcenter), axis=0)
+   spower = np.concatenate((tpower, ppower), axis=0)
 
   csfs = process_xml_csf(xmlfile)
   ncsfs = len(csfs)
@@ -111,6 +112,8 @@ if __name__ == "__main__":
   else:
       raise NotImplementedError("Only HF or modpot orbitals implemented")
   eri = twoeints(mol,smo)
+  if not tdoc_frozen == 0:
+      raise NotImplementedError("Frozen core orbitals have to be tested")
   eecore = 2.0*np.trace(eri[0:tdoc_frozen,0:tdoc_frozen,:,:])
   h1e = kin + pot + eecore
   hmat, smat = cimat(ne,nmo,ovl,h1e,eri,csfs,phase)
@@ -173,9 +176,11 @@ if __name__ == "__main__":
        elif(nep[i]==1):
          #phase.append(1.0)
          phase.append(np.exp(-vproj*zproj*1.0j)*np.exp(+0.5*vproj**2*time*1.0j))
+         #phase.append((1.0-vproj*zproj*1.0j)*np.exp(+0.5*vproj**2*time*1.0j))
        elif(nep[i]==2):
          #phase.append(1.0)
          phase.append(np.exp(-vproj*zproj*1.0j)**2*np.exp(+vproj**2*time*1.0j))
+         #phase.append((1.0-vproj*zproj*1.0j)**2*np.exp(+vproj**2*time*1.0j))
        else:
          raise NotImplementedError("Wrong number of projectile electrons")
 
@@ -188,10 +193,11 @@ if __name__ == "__main__":
      mol.build( unit = 'Bohr')
 
      zpcenter = [np.repeat([xp,yp,zp], len(pcenter))]
-     salp = np.concatenate((talp, palp), axis=0)
-     scoef = np.concatenate((tcoef, pcoef), axis=0)
-     scenter = np.concatenate((tcenter, zpcenter), axis=0)
-     spower = np.concatenate((tpower, ppower), axis=0)
+     if orb == 'modpot':
+      salp = np.concatenate((talp, palp), axis=0)
+      scoef = np.concatenate((tcoef, pcoef), axis=0)
+      scenter = np.concatenate((tcenter, zpcenter), axis=0)
+      spower = np.concatenate((tpower, ppower), axis=0)
 
      if orb == 'modpot':
        ovl, kin, pot = hcore_modpot(salp, scoef, scenter, spower, mol, smo)
@@ -200,6 +206,8 @@ if __name__ == "__main__":
      else:
        raise NotImplementedError("Only HF or modpot orbitals implemented")
      eri = twoeints(mol,smo)
+     if not tdoc_frozen == 0:
+       raise NotImplementedError("Frozen core orbitals have to be tested")
      eecore = 2.0*np.trace(eri[0:tdoc_frozen,0:tdoc_frozen,:,:])
      h1e = kin + pot + eecore
 

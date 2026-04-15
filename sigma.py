@@ -21,6 +21,9 @@ for i in range(nsta):
  print(i,sig[i])
 
 print()
+print(np.sum(sig[0:4]))
+print(np.sum(sig[0:5]))
+print()
 
 s0 = sig[21]
 sexc = np.sum(sig[12:15])
