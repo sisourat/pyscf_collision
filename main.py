@@ -103,6 +103,13 @@ if __name__ == "__main__":
   for i in range(ncsfs):
       print(i,csfs[i])
 
+  nep_csf = []
+  for csf in csfs:
+      _, alpe, betae = csf.terms[0]
+      nte = int(np.count_nonzero(np.array(alpe)<ntmo) + np.count_nonzero(np.array(betae)<ntmo))
+      npe = len(alpe)+len(betae)-nte
+      nep_csf.append(npe)
+
   # Asymptotic Energies
   phase = np.ones(ncsfs)
   if orb == 'modpot':
@@ -149,10 +156,6 @@ if __name__ == "__main__":
 
   for i in range(nsta):
     _, alpe, betae =  csfs[largest_component_indices[i]].terms[0]
-    nte = int(np.count_nonzero(np.array(alpe)<ntmo) + np.count_nonzero(np.array(betae)<ntmo))
-    npe = len(alpe)+len(betae)-nte
-    net.append(nte)
-    nep.append(npe)
     esta.append(eig[i])
     print(i, esta[i].real)
     for j in range(ncsfs):
@@ -171,16 +174,12 @@ if __name__ == "__main__":
      time = zproj/vproj
      phase = []
      for i, csf in enumerate(csfs):
-       if(nep[i]==0):
+       if(nep_csf[i]==0):
          phase.append(1.0)
-       elif(nep[i]==1):
-         #phase.append(1.0)
+       elif(nep_csf[i]==1):
          phase.append(np.exp(-vproj*zproj*1.0j)*np.exp(+0.5*vproj**2*time*1.0j))
-         #phase.append((1.0-vproj*zproj*1.0j)*np.exp(+0.5*vproj**2*time*1.0j))
-       elif(nep[i]==2):
-         #phase.append(1.0)
+       elif(nep_csf[i]==2):
          phase.append(np.exp(-vproj*zproj*1.0j)**2*np.exp(+vproj**2*time*1.0j))
-         #phase.append((1.0-vproj*zproj*1.0j)**2*np.exp(+vproj**2*time*1.0j))
        else:
          raise NotImplementedError("Wrong number of projectile electrons")
 
