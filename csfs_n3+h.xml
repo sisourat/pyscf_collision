@@ -1,0 +1,30 @@
+<input>
+  
+  <general>
+   <spin> 2 </spin>
+   <electron na='2' nb='1' />
+  </general>
+
+  <block>
+    <space ne='2' imo='1' fmo='1' />
+    <space ne='1' imo='23' fmo='23' />
+  </block>
+
+  <block>
+    <space ne='1' imo='1' fmo='1' />
+    <space ne='1' imo='2' fmo='4' />
+    <space ne='1' imo='23' fmo='23' />
+  </block>
+
+  <block>
+    <space ne='2' imo='1' fmo='1' />
+    <space ne='1' imo='2' fmo='13' />
+  </block>
+
+  <block>
+    <space ne='1' imo='1' fmo='1' />
+    <space ne='2' imo='2' fmo='4' />
+  </block>
+
+</input>
+
