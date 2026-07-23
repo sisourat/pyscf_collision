@@ -1,0 +1,24 @@
+<input>
+  
+  <general>
+   <spin> 1 </spin>
+   <electron na='7' nb='5' />
+  </general>
+
+  <block>  #Ar++ CO
+    <space ne='8' imo='3' fmo='6' />
+    <space ne='4' imo='34' fmo='36' />
+  </block>
+
+  <block> #Ar+ CO+
+    <space ne='7' imo='3' fmo='6' />
+    <space ne='5' imo='34' fmo='36' />
+  </block>
+
+  <block>  #Ar CO++
+    <space ne='6' imo='3' fmo='6' />
+    <space ne='6' imo='34' fmo='36' />
+  </block>
+
+</input>
+

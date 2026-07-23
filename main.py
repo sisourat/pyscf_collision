@@ -86,17 +86,25 @@ if __name__ == "__main__":
   mol = gto.M(atom=sgeom,basis=sbasis,charge=scharge,spin=sspin)
   mol.build( unit = 'Bohr')
 
-  zpcenter = [np.repeat([0,0,zp], len(pcenter))]
-  salp = np.concatenate((talp, palp), axis=0)
-  scoef = np.concatenate((tcoef, pcoef), axis=0)
-  scenter = np.concatenate((tcenter, zpcenter), axis=0)
-  spower = np.concatenate((tpower, ppower), axis=0)
+  if orb == 'modpot':
+   zpcenter = [np.repeat([0,0,zp], len(pcenter))]
+   salp = np.concatenate((talp, palp), axis=0)
+   scoef = np.concatenate((tcoef, pcoef), axis=0)
+   scenter = np.concatenate((tcenter, zpcenter), axis=0)
+   spower = np.concatenate((tpower, ppower), axis=0)
 
   csfs = process_xml_csf(xmlfile)
   ncsfs = len(csfs)
 
   for i in range(ncsfs):
       print(i,csfs[i])
+
+  nep_csf = []
+  for csf in csfs:
+      _, alpe, betae = csf.terms[0]
+      nte = int(np.count_nonzero(np.array(alpe)<ntmo) + np.count_nonzero(np.array(betae)<ntmo))
+      npe = len(alpe)+len(betae)-nte
+      nep_csf.append(npe)
 
   # Asymptotic Energies
   phase = np.ones(ncsfs)
@@ -108,10 +116,15 @@ if __name__ == "__main__":
       raise NotImplementedError("Only HF or modpot orbitals implemented")
   r12mo = twoeints(mol,smo)
   r12mo_antisym = r12mo - r12mo.transpose(0, 2, 1, 3)
-  eecore = 2.0*np.trace(r12mo[0:tdoc_frozen,0:tdoc_frozen,:,:])
+  # Sum over core orbitals
+  #eecore = 2.0*np.trace(r12mo_antisym[0:tdoc_frozen,0:tdoc_frozen,:,:])
+  eecore = 0.0
+  for i in range(tdoc_frozen):
+    eecore += r12mo[:, i, :, i]  # Sum over (p i | q i)
+  for i in range(ntmo,ntmo+pdoc_frozen):
+    eecore += r12mo[:, i, :, i]  # Sum over (p i | q i)
   h1emo = kin + pot + eecore
   hmat, smat = cimat(ovmo, h1emo, r12mo, r12mo_antisym, ne, nmo, csfs, phase)
-  #hmat, smat = cimat(ovmo, h1emo, ne, nmo, csfs, phase)
 
   # Create a mask for the diagonal
   if nodiag:
@@ -165,12 +178,12 @@ if __name__ == "__main__":
      time = zproj/vproj
      phase = []
      for i, csf in enumerate(csfs):
-       if(nep[i]==0):
+       if(nep_csf[i]==0):
          phase.append(1.0)
-       elif(nep[i]==1):
+       elif(nep_csf[i]==1):
          #phase.append(1.0)
          phase.append(np.exp(-vproj*zproj*1.0j)*np.exp(+0.5*vproj**2*time*1.0j))
-       elif(nep[i]==2):
+       elif(nep_csf[i]==2):
          #phase.append(1.0)
          phase.append(np.exp(-vproj*zproj*1.0j)**2*np.exp(+vproj**2*time*1.0j))
        else:

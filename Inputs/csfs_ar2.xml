@@ -1,0 +1,42 @@
+<input>
+  
+  <general>
+   <spin> 3 </spin>
+   <electron na='7' nb='7' />
+  </general>
+
+  <block>
+    <space ne='2' imo='5' fmo='5' />
+    <space ne='4' imo='6' fmo='8' />
+    <space ne='8' imo='32' fmo='35' />
+  </block>
+
+  <block>
+    <space ne='8' imo='5' fmo='8' />
+    <space ne='2' imo='32' fmo='32' />
+    <space ne='4' imo='33' fmo='35' />
+  </block>
+
+  <block>
+    <space ne='2' imo='5' fmo='5' />
+    <space ne='3' imo='6' fmo='8' />
+    <space ne='1' imo='9' fmo='12' />
+    <space ne='8' imo='32' fmo='35' />
+  </block>
+
+  <block>
+    <space ne='8' imo='5' fmo='8' />
+    <space ne='2' imo='32' fmo='32' />
+    <space ne='3' imo='33' fmo='35' />
+    <space ne='1' imo='36' fmo='39' />
+  </block>
+
+  <block>
+    <space ne='2' imo='5' fmo='5' />
+    <space ne='5' imo='6' fmo='8' />
+    <space ne='2' imo='32' fmo='32' />
+    <space ne='5' imo='33' fmo='35' />
+  </block>
+
+</input>
+

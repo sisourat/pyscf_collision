@@ -72,6 +72,9 @@ def process_xml_csf(finp):
                elif occ[i] == 1:
                    unp.append(int(seqs[i]))
 
+           if spin == 3 and unp == []:
+               continue
+           #print(spin,p,unp)
            csfs = getCSF(spin, p, unp)
            for csf in csfs:
             #print(csf)

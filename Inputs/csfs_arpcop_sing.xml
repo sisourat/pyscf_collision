@@ -1,0 +1,27 @@
+<input>
+  
+  <general>
+   <spin> 1 </spin>
+   <electron na='6' nb='6' />
+  </general>
+
+  <block>  #Ar+ CO+
+    <space ne='7' imo='3' fmo='6' />
+    <space ne='5' imo='34' fmo='36' />
+  </block>
+
+  <block>  #Ar+ CO+
+    <space ne='6' imo='4' fmo='6' />
+    <space ne='5' imo='34' fmo='36' />
+    <space ne='1' imo='7' fmo='20' />
+  </block>
+
+  block>  #Ar+ CO+
+    space ne='4' imo='4' fmo='5' />
+    space ne='1' imo='6' fmo='6' />
+    space ne='5' imo='34' fmo='36' />
+    space ne='2' imo='7' fmo='12' />
+  /block>
+
+</input>
+
